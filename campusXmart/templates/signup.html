@@ -1,0 +1,152 @@
+{%load static %}
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Signup Modal | CampusXMart</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#36c4a8",
+                        "background-light": "#f6f8f7",
+                        "background-dark": "#131f1d",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .modal-overlay {
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+        }
+    </style>
+</head>
+</header>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display min-h-screen flex items-center justify-center">
+
+<!-- Hero Section -->
+<section class="relative w-full py-12 lg:py-20 overflow-hidden">
+<div class="absolute inset-0 bg-gradient-to-br from-primary via-primary/80 to-primary/40 opacity-10"></div>
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+<div class="grid lg:grid-cols-2 gap-12 items-center">
+<div class="space-y-6">
+<span class="inline-block px-4 py-1.5 bg-primary/10 text-primary font-bold text-xs uppercase tracking-wider rounded-full">Student-Only Marketplace</span>
+<h2 class="text-4xl lg:text-6xl font-800 leading-tight text-slate-900 dark:text-white">
+                    Upgrade Your Campus Life, <span class="text-primary">Budget-Friendly.</span>
+</h2>
+<p class="text-lg text-slate-600 dark:text-slate-400 max-w-lg">
+                    Buy and sell everything from used textbooks to dorm furniture with verified students in your university community.
+                </p>
+<div class="flex flex-wrap gap-4 pt-4">
+<a href='#'><button class="px-8 py-4 bg-primary text-white font-bold rounded-xl shadow-lg shadow-primary/30 hover:shadow-xl hover:-translate-y-0.5 transition-all">Shop Now</button></a>
+<a href='#'><button class="px-8 py-4 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 font-bold rounded-xl hover:bg-slate-50 transition-all">Start Selling</button></a>
+</div>
+</div>
+<div class="hidden lg:block relative">
+<div class="aspect-square bg-primary/20 rounded-full blur-3xl absolute -bottom-10 -right-10 w-64 h-64"></div>
+<img alt="University students studying together with laptops and coffee" class="relative z-10 rounded-3xl shadow-2xl w-full h-auto object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCG7omMXywPCWA3BY7ohYhyO9t8v09gO3B1-Ij48ssmysOHL-dEgNRm8kdXkslMvi2eOxMV-0QUOtgyeTL8zGp9SSoE_A2IqRf2ZV6IBbTp86SfOAV72k20FKv3cEh3vTGsnaR3ygdJajSe1QfxpRTGTXCRIJxL0eIT2NH2YGcxPhRe6Q5glmSuc2XwV3AKQPUXSwlyv6VniuQyjtjnbK4pZBAtJ1Kcwrtm8KwwTwHPj4H4_85wbI5NjS79Jg71aQdXrpBzOKor0rtu"/>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Modal Overlay -->
+<div class="fixed inset-0 z-50 flex items-center justify-center p-4 modal-overlay">
+<!-- Modal Card -->
+<div class="relative w-full max-w-[480px] bg-white dark:bg-slate-900 p-8 rounded-xl shadow-2xl border border-slate-200 dark:border-slate-800 animate-in fade-in zoom-in duration-300">
+<!-- Close Button -->
+<a href={% url "homepage" %}><button aria-label="Close modal" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors p-2">
+<span class="material-symbols-outlined">close</span>
+</button></a>
+<!-- Modal Header -->
+<div class="flex flex-col items-center gap-4 mb-8">
+<div class="size-12 bg-primary/10 text-primary flex items-center justify-center rounded-xl">
+<img src="{% static 'assests/CAMPUS.png' %}" alt="logo" class="h-500">
+</div>
+<div class="text-center">
+<h1 class="text-3xl font-black tracking-tight text-slate-900 dark:text-white">CampusXMart</h1>
+<p class="text-slate-500 dark:text-slate-400 mt-2">Join the exclusive marketplace for your campus</p>
+</div></div>
+<!-- Signup Form -->
+<form class="flex flex-col gap-5" method = "POST" >
+    {% csrf_token %}
+<div class="flex flex-col gap-2">
+{% if messages %}
+<div class="flex-1 space-y-4">
+  {% for message in messages %}
+  <div class="bg-red-50 border-l-4 border-red-500 rounded-xl shadow-md p-4 flex items-start gap-3">
+    <!-- Icon -->
+    <div class="text-red-500 text-xl">
+      ⚠️
+    </div>
+    <!-- Message Content -->
+    <div>
+      <h4 class="font-semibold text-red-700">{{ message }}</h4>
+      {% if user.created %}
+      <p class="text-sm text-red-500 leading-relaxed">
+        Thank you for creating an account!
+      p>
+      {% endif %}
+      <p class="text-sm text-red-500 leading-relaxed">
+        Please try again.
+      p>
+        
+    </div>
+
+  </div>
+  {% endfor %}
+</div>
+{% endif %}
+
+<label class="text-sm font-semibold text-slate-700 dark:text-slate-300">User Name</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xl">person</span>
+<input class="w-full pl-10 pr-4 h-12 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:border-primary focus:ring-1 focus:ring-primary transition-all text-slate-900 dark:text-white outline-none" placeholder="Abhay" type="text" name="user_name" required >
+</div></div>
+<div class="flex flex-col gap-2">
+<label class="text-sm font-semibold text-slate-700 dark:text-slate-300">University Email</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xl">mail</span>
+<input class="w-full pl-10 pr-4 h-12 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:border-primary focus:ring-1 focus:ring-primary transition-all text-slate-900 dark:text-white outline-none" placeholder="jluid@jlu.edu.in" type="email" name="email_id" required>
+</div>
+</div>
+<div class="flex flex-col gap-2">
+<label class="text-sm font-semibold text-slate-700 dark:text-slate-300">Password</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xl">lock</span>
+<input class="w-full pl-10 pr-12 h-12 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:border-primary focus:ring-1 focus:ring-primary transition-all text-slate-900 dark:text-white outline-none" placeholder="Create a strong password" type="password" name="password" required>
+<button class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-primary transition-colors" type="button">
+<span class="material-symbols-outlined">visibility</span>
+</button>
+</div>
+</div>
+<div class="flex items-center gap-2 mt-2">
+<input class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4" id="terms" type="checkbox"/>
+<label class="text-xs text-slate-500 dark:text-slate-400" for="terms">
+                        I agree to the <a class="text-primary hover:underline" href="#">Terms of Service</a> and <a class="text-primary hover:underline" href="#">Privacy Policy</a>
+</label>
+</div>
+<button class="w-full bg-primary hover:bg-primary/90 text-white font-bold py-3.5 rounded-lg shadow-lg shadow-primary/20 transition-all mt-4 flex items-center justify-center gap-2" type="submit">
+                    Create Account
+                    <span class="material-symbols-outlined text-lg">arrow_forward</span>
+</button>
+</form>
+<div class="mt-8 pt-6 border-t border-slate-100 dark:border-slate-800 text-center">
+<p class="text-slate-600 dark:text-slate-400">
+                    Already have an account? 
+                    <a class="text-primary font-bold hover:underline ml-1" href={% url "login" %}>Login here</a>
+</p>
+</div></div></div>
+</body>
+</html>
