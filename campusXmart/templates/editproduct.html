@@ -8,16 +8,6 @@
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <script id="tailwind-config">
 
-      function selectCategory(categoryId) {
-    document.getElementById("selectedCategory").value = categoryId;
-
-    document.querySelectorAll("button").forEach(btn => {
-        btn.classList.remove("border-primary");
-    });
-
-    event.target.classList.add("border-primary");
-}
-
       tailwind.config = {
         theme: {
           extend: {
@@ -198,10 +188,10 @@
     </div>
     <div class="space-y-4 w-full">
       <h2 class="text-2xl font-bold text-on-surface">Which category does it belong to?</h2>
-      <div class="flex flex-wrap gap-3 overflow-x-auto">
+      <div class="flex flex-wrap gap-3 overflow-x-auto category-buttons">
         <input type="hidden" name="category" id="selectedCategory" value="{{ product.category.category_id }}" required>  
     {% for categoryy in categories %}
-   <button class="bg-white border-2 border-transparent hover:border-primary px-4 py-3 rounded-2xl text-on-surface-variant font-medium text-center transition-all shadow-sm" type="button" onclick="selectCategory('{{ categoryy.category_id }}')">{{ categoryy.category_name }}</button>
+   <button data-cat="{{ categoryy.category_id }}" class="bg-white border-2 border-transparent hover:border-primary px-4 py-3 rounded-2xl text-on-surface-variant font-medium text-center transition-all shadow-sm" type="button" onclick="setSelectedCategory(this, '{{ categoryy.category_id }}')">{{ categoryy.category_name }}</button>
    {% endfor %}
   </div>
    </div>
@@ -216,7 +206,7 @@
    <h2 class="text-2xl font-bold text-on-surface">How much are you asking for it?</h2>
    <div class="relative">
    <span class="absolute left-6 top-1/2 -translate-y-1/2 text-2xl font-bold text-on-surface-variant">₹</span>
-   <input class="w-full max-w-[280px] bg-white border-none focus:ring-4 focus:ring-primary/10 rounded-2xl pl-12 pr-6 py-5 text-2xl font-bold text-on-surface shadow-sm transition-all" placeholder="0.00" type="number" name="price" value="{{ product.price }}" required>
+   <input class="w-full max-w-[280px] bg-white border-none focus:ring-4 focus:ring-primary/10 rounded-2xl pl-12 pr-6 py-5 text-2xl font-bold text-on-surface shadow-sm transition-all" placeholder="0" type="number" name="price" step="1" inputmode="numeric" pattern="\d*" value="{{ product.price|floatformat:'-2' }}" required>
    </div>
    </div>
    </div>
@@ -244,7 +234,7 @@
        <span class="material-symbols-outlined text-4xl text-primary">add_a_photo</span>
       </div>
        <span class="text-lg font-medium text-on-surface-variant group-hover:text-primary transition-colors">Click to upload photos</span>
-    <input type="file" id="productImages" name="product_image_url" class="text-primary" required />
+    <input type="file" id="productImages" name="product_image_url" class="text-primary" />
       <p class="text-on-surface-variant text-sm mt-1"> Make 'em look good!</p>
     </label>
    </div>
@@ -305,5 +295,17 @@
                 </div>
 </div>
 </footer>
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+  var sel = document.getElementById('selectedCategory');
+  if(sel){
+    var val = sel.value;
+    if(val){
+      var btn = document.querySelector("button[data-cat='"+val+"']");
+      if(btn) btn.classList.add('border-primary');
+    }
+  }
+});
+</script>
 </body>
 </html>

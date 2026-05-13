@@ -1,0 +1,109 @@
+<main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+    <!-- Search Bar -->
+    <div class="mb-6">
+        <form method="GET" action="{% url 'searchproduct' %}" class="flex gap-4">
+            <div class="flex-1 relative">
+                <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">search</span>
+                <input type="text" name="q" value="{{ query }}" placeholder="Search for products..." 
+                       class="w-full bg-white border border-slate-200 rounded-lg pl-10 pr-4 py-3 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none">
+            </div>
+            <button type="submit" class="bg-indigo-600 text-white px-6 py-3 rounded-lg hover:bg-indigo-700 transition-colors font-medium">
+                Search
+            </button>
+        </form>
+    </div>
+
+    <!-- Results Header -->
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+        <div>
+            <h1 class="text-2xl font-bold text-slate-800">
+                Search Results for "<span class="text-indigo-600">{{ query }}</span>"
+            </h1>
+            <p class="text-sm text-slate-500 mt-1">
+                {{ total_results }} product{{ total_results|pluralize }} found
+            </p>
+        </div>
+        <div class="flex items-center gap-2">
+            <span class="text-sm text-slate-500">Sort by:</span>
+            <form method="GET" action="{% url 'searchproduct' %}" id="sortForm">
+                <input type="hidden" name="q" value="{{ query }}">
+                <select name="sort" onchange="this.form.submit()"
+                    class="bg-white border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-700 
+                           focus:ring-2 focus:ring-indigo-500 outline-none cursor-pointer">
+                    <option value="relevant" {% if sort_by == 'relevant' %}selected{% endif %}>Most Relevant</option>
+                    <option value="price_low" {% if sort_by == 'price_low' %}selected{% endif %}>Price: Low to High</option>
+                    <option value="price_high" {% if sort_by == 'price_high' %}selected{% endif %}>Price: High to Low</option>
+                    <option value="newest" {% if sort_by == 'newest' %}selected{% endif %}>Newest First</option>
+                </select>
+            </form>
+        </div>
+    </div>
+
+    {% if products %}
+    <!-- Results Grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+        {% for product in products %}
+        <a href="{% url 'productdetail' product.product_id %}" 
+           class="group bg-white rounded-2xl border border-slate-200 overflow-hidden 
+                  hover:shadow-lg hover:border-indigo-200 transition-all duration-300 hover:-translate-y-1">
+            
+            <!-- Product Image -->
+            <div class="aspect-square bg-slate-100 relative overflow-hidden">
+                {% if product.product_image_url %}
+                    <img src="{{ product.product_image_url.url }}" 
+                         alt="{{ product.product_title }}"
+                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                {% else %}
+                    <div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-slate-200 to-slate-300">
+                        <span class="material-symbols-outlined text-slate-400 text-6xl">image</span>
+                    </div>
+                {% endif %}
+                
+                <!-- Category Badge -->
+                <div class="absolute top-3 left-3">
+                    <span class="bg-white/90 backdrop-blur-sm text-xs font-medium text-slate-700 px-2.5 py-1 rounded-full shadow-sm">
+                        {{ product.category.category_name }}
+                    </span>
+                </div>
+                
+                <div class="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors"></div>
+            </div>
+            
+            <!-- Product Info -->
+            <div class="p-4">
+                <h3 class="font-semibold text-slate-800 text-sm leading-snug mb-2 line-clamp-2 
+                           group-hover:text-indigo-700 transition-colors">
+                    {{ product.product_title }}
+                </h3>
+                
+                {% if product.product_description %}
+                <p class="text-xs text-slate-400 mb-2 line-clamp-2">{{ product.product_description|truncatewords:15 }}</p>
+                {% endif %}
+                
+                <div class="flex items-center justify-between">
+                    <p class="text-lg font-bold text-indigo-600">₹{{ product.price|floatformat:0 }}</p>
+                    <span class="material-symbols-outlined text-slate-300 group-hover:text-indigo-500 transition-colors">
+                        arrow_forward
+                    </span>
+                </div>
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+
+    {% else %}
+    <!-- No Results -->
+    <div class="text-center py-20">
+        <span class="material-symbols-outlined text-6xl text-slate-300 mb-4 block">search_off</span>
+        <h2 class="text-xl font-semibold text-slate-600 mb-2">Koi product nahi mila</h2>
+        <p class="text-slate-400 mb-6">Koi aur keyword try karo ya spelling check karo</p>
+        <a href="/" class="inline-flex items-center gap-2 bg-indigo-600 text-white px-5 py-2.5 rounded-lg 
+                          hover:bg-indigo-700 transition-colors text-sm font-medium">
+            <span class="material-symbols-outlined text-lg">home</span>
+            Home pe jaao
+        </a>
+    </div>
+    {% endif %}
+
+</main>

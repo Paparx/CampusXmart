@@ -147,16 +147,15 @@
 <div class="p-4 rounded-xl border border-primary/10 bg-white dark:bg-slate-800 shadow-sm flex items-center justify-between">
 <div class="flex items-center gap-3">
 <div class="w-12 h-12 rounded-full overflow-hidden bg-slate-200">
-{% if profile.user_image_url %}
-<img class="w-full h-full object-cover" data-alt="Student seller profile picture" src="{{ profile.user_image_url.url }}"/>
+{% if listedproducts.user.user_image_url %}
+<img class="w-full h-full object-cover" data-alt="Student seller profile picture" src="{{ listedproducts.user.user_image_url.url }}"/>
 {% else %}
 <img class="w-full h-full object-cover" data-alt="Student seller profile picture" src="{% static 'assests/pic.png' %}"/>
 {% endif %}
 </div>
 <div>
 <div class="flex items-center gap-1">
-<p class="font-bold">{{ profile.user_name }}</p>
-<!-- <span class="material-symbols-outlined text-primary text-sm filled-icon">verified</span> -->
+<p class="font-bold">{{ listedproducts.user.user_name }}</p>
 </div>
 <p class="text-xs text-slate-500 font-medium">Seller •</p>
 </div>
@@ -172,8 +171,6 @@
 <div class="flex flex-col gap-3 pt-2">
 <a href="{% url 'negotation' listedproducts.product_id %}"><button class="w-full bg-primary text-white py-4 rounded-lg font-black text-lg shadow-lg shadow-primary/20 hover:opacity-90 active:scale-[0.98] transition-all uppercase" for = "contact-seller">
                         Negotiate Price</button></a>
-<label class="w-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 py-4 rounded-lg font-black text-lg hover:opacity-90 transition-opacity uppercase" >
-</label>
 </div>
 <div class="flex items-center justify-between py-4 border-t border-slate-200 dark:border-slate-700 mt-4">
 <div class="flex items-center gap-2 text-sm text-slate-500">

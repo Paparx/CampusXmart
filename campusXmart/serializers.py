@@ -25,20 +25,7 @@ class ProductSerializer(serializers.ModelSerializer):
         read_only_fields = ("created_datetime", "updated_datetime")
 
 
-#  TRANSACTION 
-class TransactionSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Transaction
-        fields = "__all__"
-        read_only_fields = ("transaction_date",)
-
-
-#  SELLER RATING 
-class sellerRatingSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = sellerRating
-        fields = "__all__"
-        read_only_fields = ("rating_date_time",)
+#  TRANSACTION and sellerRating serializers removed (models not present)
 
 
 #  FRAUD REPORT 

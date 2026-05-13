@@ -37,6 +37,7 @@
         .group:hover .dropdown-content {
             display: block;
         }
+        /* Dropzone styles (no preview) */
     </style>
 </head>
 <body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100">
@@ -122,15 +123,22 @@
 <div class="p-6 md:p-8">
 <form method="POST" enctype="multipart/form-data" class="space-y-6">
     {% csrf_token %}
+    {% if messages %}
+      <div>
+        {% for message in messages %}
+          <div class="mb-4 px-4 py-3 rounded {{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+      </div>
+    {% endif %}
 <div>
 <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2" for="subject">Subject</label>
-<input class="w-full rounded-lg border-primary/20 bg-primary/5 dark:bg-slate-800 focus:border-primary focus:ring-primary text-slate-900 dark:text-slate-100 py-3 px-4 placeholder:text-slate-400 dark:placeholder:text-slate-500" id="subject" name="subject" placeholder="Briefly describe the issue (e.g., Potential Scam, Prohibited Item)" type="text"/>
+<input class="w-full rounded-lg border-primary/20 bg-primary/5 dark:bg-slate-800 focus:border-primary focus:ring-primary text-slate-900 dark:text-slate-100 py-3 px-4 placeholder:text-slate-400 dark:placeholder:text-slate-500" id="subject" name="reason" placeholder="Briefly describe the issue (e.g., Potential Scam, Prohibited Item)" type="text"/>
 </div>
 <!-- Category Field -->
 <div>
 <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2" for="category">Issue Category</label>
 <div class="relative">
-<select class="w-full rounded-lg border-primary/20 bg-primary/5 dark:bg-slate-800 focus:border-primary focus:ring-primary text-slate-900 dark:text-slate-100 py-3 px-4 appearance-none cursor-pointer" id="category" name="category">
+<select class="w-full rounded-lg border-primary/20 bg-primary/5 dark:bg-slate-800 focus:border-primary focus:ring-primary text-slate-900 dark:text-slate-100 py-3 px-4 appearance-none cursor-pointer" id="category" name="type_of_fraud">
 <option disabled="" selected="" value="">Select a category</option>
 <option value="fraud">Fraudulent / Fake Listing</option>
 <option value="prohibited">Prohibited Content</option>
@@ -152,13 +160,16 @@
 <div>
 <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Upload Evidence</label>
 <div class="flex items-center justify-center w-full">
-<label class="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-primary/20 rounded-lg cursor-pointer bg-primary/5 hover:bg-primary/10 dark:hover:bg-slate-800 transition-all" for="dropzone-file">
-<div class="flex flex-col items-center justify-center pt-5 pb-6">
+<label class="relative flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-primary/20 rounded-lg cursor-pointer bg-primary/5 hover:bg-primary/10 dark:hover:bg-slate-800 transition-all" for="dropzone-file">
+<div class="flex flex-col items-center justify-center pt-5 pb-6" id="dropzone-inner">
 <span class="material-symbols-outlined text-primary text-3xl mb-2">cloud_upload</span>
 <p class="mb-1 text-sm text-slate-700 dark:text-slate-300 font-medium">Click to upload or drag and drop</p>
 <p class="text-xs text-slate-500 dark:text-slate-400">PNG, JPG or PDF (MAX. 5MB)</p>
+<p id="dropzone-filename" class="text-xs text-slate-500 dark:text-slate-400 mt-2"></p>
 </div>
-<input class="hidden" id="dropzone-file" type="file"/>
+
+<input class="hidden" id="dropzone-file" name="any_evidence" accept="image/png,image/jpeg,image/jpg,image/webp" type="file"/>
+                            
 </label>
 </div>
 </div>
@@ -231,5 +242,7 @@
                 </div>
 </div>
 </footer>
+
+<script src="{% static 'app.js' %}"></script>
 </body>
 </html>

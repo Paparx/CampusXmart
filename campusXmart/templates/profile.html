@@ -144,7 +144,7 @@
 <img alt="{{ profile.user_name }}" class="w-32 h-32 rounded-xl border-4 border-white shadow-md object-cover"  src="{% static 'assests/pic.png' %}">
 {% endif %}
 <input type="file" name="user_image_url" class="hidden" id="profileImageInput" >
-<button class="absolute bottom-12 right-2 bg-white rounded-full p-1.5 shadow-md border border-slate-100 hover:text-primary transition-colors" type="button" onclick="document.getElementById('profileImageInput').click();">
+<button class="absolute bottom-12 right-2 bg-white rounded-full p-1.5 shadow-md border border-slate-100 hover:text-primary transition-colors" type="button" data-trigger-file="profileImageInput">
     <span class="material-symbols-outlined text-sm" >edit</span>
 </button>
 <div>
@@ -157,11 +157,9 @@
     <div class="flex flex-wrap items-center gap-4 mt-1 text-slate-500 text-sm font-medium">
         <span class="flex items-center gap-1"><span class="material-symbols-outlined text-lg">school</span> Jagran Lakecity University</span>
         <span class="flex items-center gap-1">
-            <span class="material-symbols-outlined text-lg">calendar_today</span> Joined at {{ profiles.created_datetime|  date:" j F Y" }}
+            <span class="material-symbols-outlined text-lg">calendar_today</span> Joined at {{ profile.created_datetime|  date:" j F Y" }}
         </span>
         <span class="flex items-center gap-1">
-            <span class="material-symbols-outlined text-lg" style="font-variation-settings: 'FILL' 1;">star</span> 4.9 (24 Reviews)
-        </span>
 </div>
 </div>
 </div>

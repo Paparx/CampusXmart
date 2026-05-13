@@ -184,25 +184,25 @@
 <!-- Seller Info Card -->
 <div class="bg-surface p-6 rounded-lg flex items-center justify-between border border-outline-variant/20">
 <div class="flex items-center gap-4">
-{% if profile.user_image_url %}
-<img class="w-14 h-14 rounded-full" src="{{ profile.user_image_url.url }}" alt="{{ profile.user_name }}">
+{% if listedproducts.user.user_image_url %}
+<img class="w-14 h-14 rounded-full" src="{{ listedproducts.user.user_image_url.url }}" alt="{{ listedproducts.user.user_name }}">
 {% else %}
-<div class="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold text-xl border-2 border-primary/20"> {{ profile.user_name|slice:":3" }}
+<div class="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold text-xl border-2 border-primary/20"> {{ listedproducts.user.user_name|slice:":3" }}
                         </div>
 {% endif %}
 <div>
 <div class="flex items-center gap-2">
-<span class="font-bold text-on-surface text-lg">{{ profile.user_name }}</span>
+<span class="font-bold text-on-surface text-lg">{{ listedproducts.user.user_name }}</span>
 <span class="material-symbols-outlined text-primary text-xl" style="font-variation-settings: 'FILL' 1;">verified</span>
 </div>
 <div class="flex flex-col text-sm text-slate-500">
 <div class="flex items-center gap-1">
 <span class="material-symbols-outlined text-xs">mail</span>
-<span>{{ profile.email_id }}</span>
+<span>{{ listedproducts.user.email_id }}</span>
 </div>
 <div class="flex items-center gap-1">
 <span class="material-symbols-outlined text-xs">call</span>
-<span>{{ profile.contact_no}}</span>
+<span>{{ listedproducts.user.contact_no}}</span>
 </div>
 </div>
 </div>

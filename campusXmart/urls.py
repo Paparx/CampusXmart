@@ -15,5 +15,6 @@ urlpatterns = [
             path("sellproduct/", sellproduct, name="sellproduct"),
             path('edit-product/<int:product_id>/', edit_product, name='editproduct'),
             path("deleteproduct/<product_id>/", delete_product, name="deleteproduct"),
- 
+            path('search/', search_product, name='searchproduct'),
+            path('ajax/suggest/', suggest_products, name='suggest_products'),
             ]

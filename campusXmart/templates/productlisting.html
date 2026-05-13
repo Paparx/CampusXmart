@@ -1,12 +1,14 @@
 {% load static %}
-<html lang="en"><head></head><body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display">
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>CampusXMart | Product Listing</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>CampusXMart | Product Listing</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+    <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
             theme: {
@@ -25,7 +27,7 @@
             },
         }
     </script>
-<style>
+    <style>
         body { font-family: 'Inter', sans-serif; }
         .material-symbols-outlined {
             font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
@@ -56,174 +58,196 @@
             border-radius: 2px;
         }
     </style>
-<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100">
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display">
+
 <!-- Sticky Navbar -->
 <nav class="sticky top-0 z-50 w-full bg-white/90 dark:bg-background-dark/90 backdrop-blur-md border-b border-primary/10">
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-<div class="flex justify-between items-center h-16 gap-4">
-<!-- Logo -->
-<div class="flex items-center gap-2 flex-shrink-0"><a href="{% url 'homepage' %}"><img alt="CampusXMart Logo" class="w-auto object-contain hover:scale-110 hover:opacity-90 transition-all duration-300 cursor-pointer h-16" src="{% static 'assests/CAMPUS.png' %}"></a></div>
-<!-- Desktop Navigation -->
-<div class="hidden lg:flex items-center gap-6">
-<!-- Categories Dropdown -->
-<div class="relative group">
-    <button class="flex items-center gap-1 text-slate-600 dark:text-slate-400 hover:text-primary transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50">
-      Categories
-      <span class="material-symbols-outlined text-sm">expand_more</span>
-    </button>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-16 gap-4">
+            <!-- Logo -->
+            <div class="flex items-center gap-2 flex-shrink-0">
+                <a href="{% url 'homepage' %}">
+                    <img alt="CampusXMart Logo" class="w-auto object-contain hover:scale-110 hover:opacity-90 transition-all duration-300 cursor-pointer h-16" src="{% static 'assests/CAMPUS.png' %}">
+                </a>
+            </div>
+            
+            <!-- Desktop Navigation -->
+            <div class="hidden md:flex items-center gap-6">
+                <!-- Categories Dropdown -->
+                <div class="relative group">
+                    <button class="flex items-center gap-1 text-slate-600 dark:text-slate-400 hover:text-primary transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50">
+                        Categories
+                        <span class="material-symbols-outlined text-sm">expand_more</span>
+                    </button>
 
-    <!-- Categories Dropdown (Hidden by default, shown on hover/click in real app) -->
-    <div class="absolute top-full left-0 mt-2 w-48 bg-white border border-slate-100 rounded-lg shadow-xl py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50 focus-within:opacity-100 focus-within:visible">
-      <a class="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 hover:text-primary" href="#">Textbooks</a>
-      <a class="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 hover:text-primary" href="#">Electronics</a>
-      <a class="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 hover:text-primary" href="#">Dorm Decor</a>
-      <a class="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 hover:text-primary" href="#">Stationery</a>
-    </div>
-</div>
-<a class="text-sm font-medium text-slate-500 hover:text-red-600 transition-colors flex items-center gap-1" href={% url "reportfraud" %}>
-<span class="material-symbols-outlined text-[18px]">report</span>
+                    <!-- Categories Dropdown -->
+                    <div class="absolute top-full left-0 mt-2 w-48 bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 rounded-lg shadow-xl py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50">
+                        {% for category in categories %}
+                            <a class="block px-4 py-2 text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 hover:text-primary" href="{% if query %}?q={{ query }}&category={{ category.category_id }}{% else %}?category={{ category.category_id }}{% endif %}">{{ category.category_name }}</a>
+                        {% empty %}
+                            <a class="block px-4 py-2 text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 hover:text-primary" href="#">Textbooks</a>
+                            <a class="block px-4 py-2 text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 hover:text-primary" href="#">Electronics</a>
+                            <a class="block px-4 py-2 text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 hover:text-primary" href="#">Dorm Decor</a>
+                            <a class="block px-4 py-2 text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 hover:text-primary" href="#">Stationery</a>
+                        {% endfor %}
+                    </div>
+                </div>
+                <a class="text-sm font-medium text-slate-500 hover:text-red-600 transition-colors flex items-center gap-1" href="{% url 'reportfraud' %}">
+                    <span class="material-symbols-outlined text-[18px]">report</span>
                     Report Fraud
                 </a>
-</div>
-<!-- Search Bar -->
-<div class="flex-1 max-w-md hidden md:block">
-<div class="relative">
-<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">search</span>
-<input class="w-full bg-slate-100 dark:bg-slate-800 border-none rounded-lg pl-10 pr-4 py-2 focus:ring-2 focus:ring-primary text-sm" placeholder="Search for textbooks, monitors..." type="text"/>
-</div>
-</div>
-<!-- Actions -->
-<div class="flex items-center gap-4">
-<div class="hidden sm:flex items-center gap-2">
-    
+            </div>
 
-<!--after login logic-->    
-{% if request.session.user_id %}
-<div class="relative group">
-  <!-- Profile Image (Link to Profile) -->
-    <div class="h-10 w-10 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden border border-slate-200 dark:border-slate-700">
-    {% if profile.user_image_url %}
-      <img alt="User Avatar" class="w-full h-full object-cover" src="{{ profile.user_image_url.url }}">
-    {% else %}
-      <img alt="User Avatar" class="w-full h-full object-cover" src="{% static 'assests/pic.png' %}">
-    {% endif %}
+            <!-- Search Bar -->
+            <div class="flex-1 max-w-md hidden lg:block">
+                <form method="GET" action="{% url 'productlist' %}" autocomplete="off" id="search-form" data-suggest-url="{% url 'suggest_products' %}" data-productlist-url="{% url 'productlist' %}">
+                    <div class="relative">
+                        <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">search</span>
+                        <input id="search-input" class="w-full bg-slate-100 dark:bg-slate-800 border-none rounded-lg pl-10 pr-4 py-2 focus:ring-2 focus:ring-primary text-sm" placeholder="Search for textbooks, monitors..." type="text" name="q" value="{{ query }}" autocomplete="off" />
+                        <div id="suggestions" class="absolute left-0 mt-12 w-full bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 rounded-lg shadow-lg z-50 hidden"></div>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Actions -->
+            <div class="flex items-center gap-4">
+                <div class="flex items-center gap-2">
+                    {% if request.session.user_id %}
+                    <div class="relative group">
+                        <div class="h-10 w-10 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden border border-slate-200 dark:border-slate-700">
+                            {% if profile.user_image_url %}
+                            <img alt="User Avatar" class="w-full h-full object-cover" src="{{ profile.user_image_url.url }}">
+                            {% else %}
+                            <img alt="User Avatar" class="w-full h-full object-cover" src="{% static 'assests/pic.png' %}">
+                            {% endif %}
+                        </div>
+                        <div class="absolute top-full right-0 mt-1 w-32 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-lg py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50">
+                            <a class="block px-4 py-2 text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700" href="{% url 'profile' %}">Profile</a>
+                            <a class="block px-4 py-2 text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700" href="{% url 'logout' %}">Logout</a>
+                        </div>
+                    </div>
+                    {% else %}
+                    <a href="{% url 'login' %}">
+                        <button class="px-4 py-2 text-sm font-semibold transition-colors bg-primary text-white rounded-lg hover:bg-primary/90 shadow-sm">Login</button>
+                    </a>
+                    {% endif %}
+                    
+                    <button class="md:hidden p-2">
+                        <span class="material-symbols-outlined">menu</span>
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
-  <!-- Dropdown Menu (Hidden by default, shown on hover) -->
-  <div class="absolute top-full left-0 mt-1 w-42 bg-primary-400 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-lg py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50">
-    <a class="block px-4 py-2 text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700" href="{% url 'profile' %}">Profile</a>
-    <a class="block px-4 py-2 text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700" href="{% url 'logout' %}">Logout</a>
-  </div>
-</div>
-{% else %}
-    <a href="{% url 'login' %}">
-        <button class="px-4 py-2 text-sm font-semibold transition-colors bg-primary text-white rounded-lg hover:bg-primary/90 shadow-sm">Login</button>
-    </a>
-{% endif %}
+</nav>
 
-<button class="md:hidden p-2">
-<span class="material-symbols-outlined">menu</span>
-</button>
-</div>
-</div>
-</div>
-</nav>
-<button class="md:hidden p-2">
-<span class="material-symbols-outlined">menu</span>
-</button>
-</div>
-</div>
-</div>
-</nav>
 <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-<!-- Breadcrumbs -->
-<div class="flex items-center gap-2 text-sm text-slate-500 mb-6">
-<a class="hover:text-primary" href="{% url 'homepage' %}">Home</a>
-<span class="material-symbols-outlined text-xs">chevron_right</span>
-<span class="text-slate-900 dark:text-slate-100 font-medium">Shop All Products</span>
-</div>
-<div class="flex flex-col lg:flex-row gap-8">
-<!-- Sidebar Filters -->
-<aside class="w-full lg:w-64 shrink-0 space-y-8">
-<!-- Filter Header -->
-<div class="flex items-center justify-between border-b border-primary/10 pb-4">
-<h3 class="font-bold text-lg flex items-center gap-2 text-slate-900 dark:text-white">
-<span class="material-symbols-outlined">filter_list</span> Filters
+    <!-- Breadcrumbs -->
+    <div class="flex items-center gap-2 text-sm text-slate-500 mb-6">
+        <a class="hover:text-primary" href="{% url 'homepage' %}">Home</a>
+        <span class="material-symbols-outlined text-xs">chevron_right</span>
+        <span class="text-slate-900 dark:text-slate-100 font-medium">Shop All Products</span>
+    </div>
+
+    <div class="flex flex-col lg:flex-row gap-8">
+        <!-- Sidebar Filters -->
+        <aside class="w-full lg:w-64 shrink-0 space-y-8">
+            <!-- Filter Header -->
+            <div class="flex items-center justify-between border-b border-primary/10 pb-4">
+                <h3 class="font-bold text-lg flex items-center gap-2 text-slate-900 dark:text-white">
+                    <span class="material-symbols-outlined">filter_list</span> Filters
                 </h3>
-<button class="text-sm text-primary font-medium hover:underline">Clear all</button>
-</div>
-<!-- Price Range -->
-<div class="space-y-4">
-<h4 class="font-semibold text-sm uppercase tracking-wider text-slate-500">Price Range</h4>
-<div class="px-2">
-<input class="w-full accent-primary h-1 bg-primary/20 rounded-lg appearance-none cursor-pointer" max="10000" min="0" type="range">
-<div class="flex justify-between mt-2 text-sm font-medium">
-<span>₹0</span>
-<span class="text-primary font-bold">₹10,000</span>
-</div>
-</div>
-</div>
-<!-- Categories -->
-<div class="space-y-4">
-<h4 class="font-semibold text-sm uppercase tracking-wider text-slate-500">Categories</h4>
-<div class="flex flex-col gap-3">
-{% for category in categories %}
-<label class="flex items-center gap-3 cursor-pointer group" for="{{category.category_id}}">
-    <input id="{{category.category_id}}" checked="" class="rounded border-slate-300 text-primary focus:ring-primary h-5 w-5" type="checkbox"/>
-    <span class="text-slate-500 group-hover:text-primary transition-colors ">{{ category.name }}</span>
-</label>
-{% endfor %}
-</div>
-</div>
-<!-- Availability -->
-<div class="space-y-4">
-<h4 class="font-semibold text-sm uppercase tracking-wider text-slate-500">Availability</h4>
-<label class="flex items-center gap-3 cursor-pointer group">
-<input class="rounded border-slate-300 text-primary focus:ring-primary h-5 w-5" type="checkbox"/>
-<span class="text-sm group-hover:text-primary transition-colors">In Stock Only</span>
-</label>
-</div>
-</aside>
-<!-- Main Content Area -->
-<section class="flex-1">
-<!-- Top Control Bar -->
-<div class="flex flex-col sm:flex-row sm:items-center justify-between mb-8 gap-4">
-<div>
-<h2 class="text-2xl font-bold mb-1">Find perfect match for You </h2>
-<!-- <p class="text-slate-500 text-sm">Showing 1-12 of 248 products</p> -->
-</div>
-<div class="flex items-center gap-3">
-<label class="text-sm text-slate-500 whitespace-nowrap">Sort by:</label>
-<select class="bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 rounded-lg text-sm focus:ring-primary focus:border-primary py-2 px-4 pr-10">
-<option>Newest Arrivals</option>
-<option>Price: Low to High</option>
-<option>Price: High to Low</option>
-<option>Best Rating</option>
-</select>
-</div>
-</div>
-<!-- Product Grid -->
-<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-6">
-<!-- Product Card 1 -->
- {% for products in product %}
-<a href='{% url "productdetail" products.product_id %}'><div class="group bg-white dark:bg-slate-800 rounded-2xl p-3 border border-slate-100 dark:border-slate-700 hover:shadow-xl transition-all">
-<div class="relative aspect-square rounded-xl overflow-hidden mb-4 bg-slate-100">
-<img alt="Headphones" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" src={{products.product_image_url.url}}>
-<div class="absolute bottom-3 left-3">
-</div>
-</div>
-<div class="px-1">
-<div class="flex justify-between items-start mb-1">
-<h4 class="font-bold text-slate-900 dark:text-white truncate">{{products.product_title}}</h4>
-</div>
-<div class="flex items-center gap-1 mb-2 text-yellow-500">
-</div>
-<div class="flex items-center justify-between mt-4">
-<span class="text-xl font-800 text-slate-900 dark:text-white">₹{{products.price|floatformat:0}}</span>
-</div>
-</div>
-</div></a>
-{% endfor %}
-</div>
+                <button id="clear-filters" class="text-sm text-primary font-medium hover:underline">Clear all</button>
+            </div>
+
+            <!-- Price Range -->
+            <div class="space-y-4">
+                <h4 class="font-semibold text-sm uppercase tracking-wider text-slate-500">Price Range</h4>
+                <div class="px-2">
+                    <div class="flex gap-2">
+                        <input id="min-price" name="min_price" class="w-1/2 bg-slate-100 dark:bg-slate-800 rounded-lg px-2 py-2 text-sm" type="number" placeholder="Min" min="0" value="{{ min_price }}">
+                        <input id="max-price" name="max_price" class="w-1/2 bg-slate-100 dark:bg-slate-800 rounded-lg px-2 py-2 text-sm" type="number" placeholder="Max" min="0" value="{{ max_price }}">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Categories Sidebar Section -->
+            <div class="space-y-4">
+                <h4 class="font-semibold text-sm uppercase tracking-wider text-slate-500">Categories</h4>
+                <div class="flex flex-col gap-3">
+                    {% for category in categories %}
+                    <label class="flex items-center gap-3 cursor-pointer group" for="cat-{{category.category_id}}">
+                        <input id="cat-{{category.category_id}}" name="category" value="{{ category.category_id }}" class="rounded border-slate-300 text-primary focus:ring-primary h-5 w-5" type="checkbox"
+                        {% if selected_categories %}
+                            {% if category.category_id in selected_categories %}checked{% endif %}
+                        {% elif selected_category %}
+                            {% if category.category_id|stringformat:"s" == selected_category %}checked{% endif %}
+                        {% endif %}
+                        />
+                        <span class="text-slate-700 dark:text-slate-200 font-medium group-hover:text-primary transition-colors">{{ category.category_name }}</span>
+                    </label>
+                    {% empty %}
+                        <p class="text-xs text-slate-400 italic">No categories available</p>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Availability -->
+            <div class="space-y-4">
+                <h4 class="font-semibold text-sm uppercase tracking-wider text-slate-500">Availability</h4>
+                <label class="flex items-center gap-3 cursor-pointer group">
+                    <input class="rounded border-slate-300 text-primary focus:ring-primary h-5 w-5" type="checkbox"/>
+                    <span class="text-sm group-hover:text-primary transition-colors">In Stock Only</span>
+                </label>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <section class="flex-1">
+            <!-- Top Control Bar -->
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-8 gap-4">
+                <div>
+                    {% if query %}
+                    <h2 class="text-2xl font-bold mb-1">Search results for "{{ query }}"</h2>
+                    {% else %}
+                    <h2 class="text-2xl font-bold mb-1">Find perfect match for You</h2>
+                    {% endif %}
+                </div>
+                <div class="flex items-center gap-3">
+                    <label class="text-sm text-slate-500 whitespace-nowrap">Sort by:</label>
+                    <select id="sort-select" name="sort" class="bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 rounded-lg text-sm focus:ring-primary focus:border-primary py-2 px-4 pr-10">
+                         <option value="" {% if sort_by == '' %}selected{% endif %}>Relevance</option>
+                         <option value="newest" {% if sort_by == 'newest' %}selected{% endif %}>Newest Arrivals</option>
+                         <option value="price_low" {% if sort_by == 'price_low' %}selected{% endif %}>Price: Low to High</option>
+                         <option value="price_high" {% if sort_by == 'price_high' %}selected{% endif %}>Price: High to Low</option>
+                         <option value="rating" {% if sort_by == 'rating' %}selected{% endif %}>Best Rating</option>
+                     </select>
+                </div>
+            </div>
+
+            <!-- Product Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-6">
+                {% for products in product %}
+                <a href="{% url 'productdetail' products.product_id %}">
+                    <div class="group bg-white dark:bg-slate-800 rounded-2xl p-3 border border-slate-100 dark:border-slate-700 hover:shadow-xl transition-all">
+                        <div class="relative aspect-square rounded-xl overflow-hidden mb-4 bg-slate-100">
+                            <img alt="{{products.product_title}}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" src="{{products.product_image_url.url}}">
+                        </div>
+                        <div class="px-1">
+                            <p class="text-[10px] uppercase font-bold text-primary mb-1">{{ products.category.name }}</p>
+                            <h4 class="font-bold text-slate-900 dark:text-white truncate">{{products.product_title}}</h4>
+                            <div class="flex items-center justify-between mt-4">
+                                <span class="text-xl font-bold text-slate-900 dark:text-white">₹{{products.price|floatformat:0}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+        </section>
+    </div>
 </main>
+<script src="{% static 'app.js' %}"></script>
 </body>
 </html>

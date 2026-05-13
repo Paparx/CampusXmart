@@ -27,28 +27,6 @@
             },
         }
 
-document.addEventListener("DOMContentLoaded", function () {
-  const scrollLeftBtn = document.getElementById("scrollLeft");
-  const scrollRightBtn = document.getElementById("scrollRight");
-  const cardContainer = document.getElementById("cardContainer");
-
-  // Scroll amount per click
-  const scrollAmount = 200;
-
-  scrollLeftBtn.addEventListener("click", () => {
-    cardContainer.scrollBy({
-      left: -scrollAmount,
-      behavior: "smooth"
-    });
-  });
-
-  scrollRightBtn.addEventListener("click", () => {
-    cardContainer.scrollBy({
-      left: scrollAmount,
-      behavior: "smooth"
-    });
-  });
-});
 
     </script>
     
@@ -103,10 +81,13 @@ document.addEventListener("DOMContentLoaded", function () {
 </div>
 <!-- Search Bar -->
 <div class="flex-1 max-w-md hidden md:block">
-<div class="relative">
-<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">search</span>
-<input class="w-full bg-slate-100 dark:bg-slate-800 border-none rounded-lg pl-10 pr-4 py-2 focus:ring-2 focus:ring-primary text-sm" placeholder="Search for textbooks, monitors..." type="text"/>
-</div>
+    <form method="GET" action="{% url 'productlist' %}" autocomplete="off" id="search-form" data-suggest-url="{% url 'suggest_products' %}" data-productlist-url="{% url 'productlist' %}">
+        <div class="relative">
+            <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">search</span>
+            <input id="search-input" class="w-full bg-slate-100 dark:bg-slate-800 border-none rounded-lg pl-10 pr-4 py-2 focus:ring-2 focus:ring-primary text-sm" placeholder="Search for textbooks, monitors..." type="text" name="q" autocomplete="off">
+            <div id="suggestions" class="absolute left-0 mt-12 w-full bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 rounded-lg shadow-lg z-50 hidden"></div>
+        </div>
+    </form>
 </div>
 <!-- Actions -->
 <div class="flex items-center gap-4">
@@ -334,5 +315,5 @@ document.addEventListener("DOMContentLoaded", function () {
                 </div>
 </div>
 </footer>
-</body>
+<script src="{% static 'app.js' %}"></script></body>
 </html>

@@ -83,7 +83,7 @@ WSGI_APPLICATION = 'myorg.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
-print("DB HOST:", os.environ.get('DATABASE_HOST'))
+# print("DB HOST:", os.environ.get('DATABASE_HOST'))
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
