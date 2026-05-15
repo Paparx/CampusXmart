@@ -101,7 +101,7 @@ WSGI_APPLICATION = 'myorg.wsgi.application'
 
 DATABASES = {
     'default': dj_database_url.parse(
-        os.getenv("DATABASE_URL"),
+        "postgresql://postgres:RJCsQGspNGjvzmXXLgkqdHARHLouuAEk@switchback.proxy.rlwy.net:25749/railway",
         conn_max_age=600,
         ssl_require=True
     )
