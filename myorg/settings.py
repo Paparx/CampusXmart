@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 
 from pathlib import Path
 import os
+import dj_database_url
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -84,18 +85,26 @@ WSGI_APPLICATION = 'myorg.wsgi.application'
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
 # print("DB HOST:", os.environ.get('DATABASE_HOST'))
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': os.environ.get('DATABASE_NAME'),
+#         'USER': os.environ.get('DATABASE_USER'),
+#         'PASSWORD': os.environ.get('DATABASE_PASSWORD'),
+#         'HOST': os.environ.get('DATABASE_HOST'),
+#         'PORT': os.environ.get('DATABASE_PORT'),
+#         'OPTIONS': {
+#             'sslmode': 'require',
+#         },
+#     }
+# }
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ.get('DATABASE_NAME'),
-        'USER': os.environ.get('DATABASE_USER'),
-        'PASSWORD': os.environ.get('DATABASE_PASSWORD'),
-        'HOST': os.environ.get('DATABASE_HOST'),
-        'PORT': os.environ.get('DATABASE_PORT'),
-        'OPTIONS': {
-            'sslmode': 'require',
-        },
-    }
+    'default': dj_database_url.parse(
+        os.getenv("DATABASE_URL"),
+        conn_max_age=600,
+        ssl_require=True
+    )
 }
 
 

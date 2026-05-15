@@ -85,17 +85,63 @@
 {% if messages %}
 <div class="flex-1 space-y-4">
   {% for message in messages %}
-  <div class="bg-red-50 border-l-4 border-red-500 rounded-xl shadow-md p-4 flex items-start gap-3">
-    
+
+  <div class="
+    {% if message.tags == 'success' %}
+      bg-green-50 border-green-500
+    {% elif message.tags == 'error' %}
+      bg-red-50 border-red-500
+    {% else %}
+      bg-blue-50 border-blue-500
+    {% endif %}
+    border-l-4 rounded-xl shadow-md p-4 flex items-start gap-3
+  ">
+
     <!-- Icon -->
-    <div class="text-red-500 text-xl">
-      ⚠️
+    <div class="
+      {% if message.tags == 'success' %}
+        text-green-500
+      {% elif message.tags == 'error' %}
+        text-red-500
+      {% else %}
+        text-blue-500
+      {% endif %}
+      text-xl
+    ">
+      {% if message.tags == 'success' %}
+        ✅
+      {% elif message.tags == 'error' %}
+        ⚠️
+      {% else %}
+        ℹ️
+      {% endif %}
     </div>
 
     <!-- Message Content -->
     <div>
-      <h4 class="font-semibold text-red-700">{{ message }}</h4>
-      <p class="text-sm text-red-500 leading-relaxed">
+      <h4 class="
+        font-semibold
+        {% if message.tags == 'success' %}
+          text-green-700
+        {% elif message.tags == 'error' %}
+          text-red-700
+        {% else %}
+          text-blue-700
+        {% endif %}
+      ">
+        {{ message }}
+      </h4>
+
+      <p class="
+        text-sm leading-relaxed
+        {% if message.tags == 'success' %}
+          text-green-500
+        {% elif message.tags == 'error' %}
+          text-red-500
+        {% else %}
+          text-blue-500
+        {% endif %}
+      ">
         Please check the details and try again.
       </p>
     </div>

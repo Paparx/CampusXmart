@@ -1,13 +1,22 @@
 (function(){
   // Expose a small API and init handlers for pages
-  function setSelectedCategory(el, categoryId){
+function setSelectedCategory(el, categoryId) {
+
     const hidden = document.getElementById('selectedCategory');
-    if(hidden) hidden.value = categoryId;
-    // limit toggle to nearby container
-    const container = el ? (el.closest('.category-buttons') || el.parentElement) : null;
-    if(container) container.querySelectorAll('button[data-cat]').forEach(b=>b.classList.remove('border-primary'));
-    if(el) el.classList.add('border-primary');
-  }
+    hidden.value = categoryId;
+
+    // parent container
+    const container = el.closest('.category-buttons');
+
+    // remove selected style from all buttons
+    container.querySelectorAll('button[data-cat]').forEach(btn => {
+        btn.classList.remove('border-primary', 'bg-primary', 'text-white');
+        btn.classList.add('bg-white');
+    });
+
+    el.classList.remove('bg-white');
+    el.classList.add('border-primary', 'bg-primary', 'text-white');
+}
 
   function initSearchSuggestions(){
     const form = document.getElementById('search-form');
@@ -92,6 +101,17 @@
       btn.addEventListener('click', function(){ const id = this.dataset.triggerFile; const inp = document.getElementById(id); if(inp) inp.click(); });
     });
   }
+
+  document.addEventListener("DOMContentLoaded", function(){
+  var sel = document.getElementById('selectedCategory');
+  if(sel){
+    var val = sel.value;
+    if(val){
+      var btn = document.querySelector("button[data-cat='"+val+"']");
+      if(btn) btn.classList.add('border-primary');
+    }
+  }
+});
 
   // Initialize on DOM ready and expose helper
   document.addEventListener('DOMContentLoaded', function(){

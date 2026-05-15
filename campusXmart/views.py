@@ -81,6 +81,10 @@ def signup(request):
         email = request.POST.get('email_id')
         password = request.POST.get('password')
 
+        if not email.lower().endswith("@student.jlu.edu.in"):
+            messages.info(request, "Only JLU student email is allowed.")
+            return redirect("signup")
+
         if User.objects.filter(user_name=username).exists():
             messages.info(request, "Username already exists.")
             return redirect("signup")
@@ -275,6 +279,7 @@ def productdetails(request , product_id):
         profile = None
         if user_id:
             profile = User.objects.get(user_id=user_id)
+
         context = {
             'listedproducts': listedproducts,
             'profile':profile,

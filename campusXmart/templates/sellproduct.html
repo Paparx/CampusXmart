@@ -191,7 +191,7 @@
       <div class="flex flex-wrap gap-3 overflow-x-auto">
         <input type="hidden" name="category" id="selectedCategory" required>  
     {% for categoryy in categories %}
-   <button class="bg-white border-2 border-transparent hover:border-primary px-4 py-3 rounded-2xl text-on-surface-variant font-medium text-center transition-all shadow-sm" type="button" onclick="setSelectedCategory(this, '{{ categoryy.category_id }}')">{{ categoryy.category_name }}</button>
+   <button class="bg-white border-2 border-transparent hover:border-primary px-4 py-3 rounded-2xl text-on-surface-variant font-medium text-center transition-all shadow-sm" type="button"  data-cat="{{ categoryy.category_id }}" onclick="setSelectedCategory(this, '{{ categoryy.category_id }}')">{{ categoryy.category_name }}</button>
    {% endfor %}
   </div>
    </div>
@@ -295,5 +295,6 @@
                 </div>
 </div>
 </footer>
+<script src="{% static 'app.js' %}"></script>
 </body>
 </html>
