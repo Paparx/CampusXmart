@@ -85,28 +85,34 @@ WSGI_APPLICATION = 'myorg.wsgi.application'
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
 # print("DB HOST:", os.environ.get('DATABASE_HOST'))
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': os.environ.get('DATABASE_NAME'),
-#         'USER': os.environ.get('DATABASE_USER'),
-#         'PASSWORD': os.environ.get('DATABASE_PASSWORD'),
-#         'HOST': os.environ.get('DATABASE_HOST'),
-#         'PORT': os.environ.get('DATABASE_PORT'),
-#         'OPTIONS': {
-#             'sslmode': 'require',
-#         },
-#     }
-# }
-
 DATABASES = {
-    'default': dj_database_url.parse(
-        "postgresql://postgres:RJCsQGspNGjvzmXXLgkqdHARHLouuAEk@switchback.proxy.rlwy.net:25749/railway",
-        conn_max_age=600,
-        ssl_require=True
-    )
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.environ.get('DATABASE_NAME'),
+        'USER': os.environ.get('DATABASE_USER'),
+        'PASSWORD': os.environ.get('DATABASE_PASSWORD'),
+        'HOST': os.environ.get('DATABASE_HOST'),
+        'PORT': os.environ.get('DATABASE_PORT'),
+        'OPTIONS': {
+            'sslmode': 'require',
+        },
+    }
 }
 
+# DATABASES = {
+#     'default': dj_database_url.parse(
+#         os.getenv("DATABASE_URL"),
+#         conn_max_age=600,
+#         ssl_require=True
+#     )
+# }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 
 
 # Password validation

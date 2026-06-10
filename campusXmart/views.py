@@ -136,7 +136,7 @@ def sellproduct(request):
             product_image_url=product_image,
         )
         messages.success(request, "Your item is now listed!")
-        return redirect('sellproduct')
+        return redirect('profile')
 
     context = {
         'categories':categories,
